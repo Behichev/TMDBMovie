@@ -47,7 +47,7 @@ struct TMDBMovieApp: App {
                     errorView
                 }
             }
-            .environmentObject(errorManager)
+//            .environmentObject(errorManager)
         }
     }
     

@@ -41,7 +41,12 @@ final class FavoritesViewModel: ObservableObject {
         if mediaStorage.favoritesMovies.isEmpty {
                 publisher
                 .sink { [weak self] completion in
-                    self?.isLoaded = false
+                    switch completion {
+                    case .failure(_):
+                        self?.isLoaded = false
+                    case .finished:
+                        print("success")
+                    }
                 } receiveValue: { [weak self] favorites in
                     self?.mediaStorage.favoritesMovies = favorites
                 }
@@ -49,7 +54,12 @@ final class FavoritesViewModel: ObservableObject {
         } else {
             publisher
             .sink { [weak self] completion in
-                self?.isLoaded = false
+                switch completion {
+                case .failure(_):
+                    self?.isLoaded = false
+                case .finished:
+                    print("success")
+                }
             } receiveValue: { [weak self] favorites in
                 if favorites != self?.mediaStorage.favoritesMovies {
                     self?.mediaStorage.favoritesMovies = favorites

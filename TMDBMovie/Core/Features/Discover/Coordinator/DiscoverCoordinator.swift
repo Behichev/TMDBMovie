@@ -17,24 +17,23 @@ final class DiscoverCoordinator: Coordinator, ObservableObject {
     
     var moviesStorage: MoviesStorage
     let repository: TMDBRepositoryProtocol
-    private var _viewModel: DiscoverMovieViewModel?
-     var viewModel: DiscoverMovieViewModel {
-         if _viewModel == nil {
-             _viewModel = DiscoverMovieViewModel(repository: repository, movieStorage: moviesStorage)
-         }
-         return _viewModel!
-     }
+    
+    private var viewModel: DiscoverMovieViewModel
+    
+    let id = UUID()
      
     
     init(repository: TMDBRepositoryProtocol, moviesStorage: MoviesStorage) {
         self.repository = repository
         self.moviesStorage = moviesStorage
-//        self.viewModel = DiscoverMovieViewModel(repository: repository, movieStorage: moviesStorage)
+        self.viewModel = DiscoverMovieViewModel(repository: repository, movieStorage: moviesStorage)
         print("✅ Discover Coordinator init")
+        print("Discover Coordinator Init ID: - \(id)")
     }
     
     deinit {
         print("❌ Discover Coordinator DEINIT")
+        print("Discover Coordinator Deinit ID: - \(id)")
     }
     
     @ViewBuilder

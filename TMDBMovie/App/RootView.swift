@@ -9,10 +9,10 @@ import SwiftUI
 
 struct RootView: View {
     
-    @ObservedObject private var rootCoordinator: RootCoordinator
+    @StateObject private var rootCoordinator: RootCoordinator
     
     init(authStore: AuthenticationStore, repository: TMDBRepositoryProtocol, mediaStorage: MoviesStorage) {
-        self._rootCoordinator = ObservedObject(wrappedValue: RootCoordinator(authStore: authStore, repository: repository, mediaStorage: mediaStorage))
+        self._rootCoordinator = StateObject(wrappedValue: RootCoordinator(authStore: authStore, repository: repository, mediaStorage: mediaStorage))
     }
     
     var body: some View {

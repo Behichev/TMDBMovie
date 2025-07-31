@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TrendingMediaView: View {
     
-    @StateObject var viewModel: TrendingMediaViewModel
+    @ObservedObject var viewModel: TrendingMediaViewModel
+    
     let onMediaTapped: (Int) -> Void
     
     var body: some View {
@@ -73,7 +74,6 @@ private extension TrendingMediaView {
                 .fontWeight(.bold)
                 .fontDesign(.rounded)
         }
-        
     }
 }
 

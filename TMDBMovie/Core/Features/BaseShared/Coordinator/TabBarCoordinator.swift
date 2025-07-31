@@ -29,7 +29,7 @@ final class TabBarCoordinator: ObservableObject {
         self.repository = repository
         self.mediaStorage = mediaStorage
         
-        setupCoordinators()
+//        setupCoordinators()
         
         print("✅ Tab Bar Coordinator init")
     }

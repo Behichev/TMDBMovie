@@ -24,7 +24,7 @@ final class DiscoverMovieViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     //debug
-    private let id = UUID()
+    let id = UUID()
     
     init(repository: TMDBRepositoryProtocol, movieStorage: MoviesStorage) {
         self.repository = repository
@@ -50,8 +50,13 @@ final class DiscoverMovieViewModel: ObservableObject {
     func loadMovies() {
         isHasLoaded = true
         repository.fetchMoviesList(page: currentPage)
-            .sink { [weak self] _ in
-                self?.isHasLoaded = false
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(_):
+                    self?.isHasLoaded = false
+                case .finished:
+                    self?.viewState = .success
+                }
             } receiveValue: { [weak self] movies in
                 self?.movieStorage.moviesList = movies
                 self?.syncWithFavorites()
@@ -66,7 +71,12 @@ final class DiscoverMovieViewModel: ObservableObject {
         
         repository.fetchMoviesList(page: currentPage)
             .sink { [weak self ] completion in
-                self?.isNextPageLoading = false
+                switch completion {
+                case .failure(_):
+                    self?.isNextPageLoading = true
+                case .finished:
+                    self?.isNextPageLoading = false
+                }
             } receiveValue: { [weak self] movies in
                 
                 let existingIDs = Set(self!.movieStorage.moviesList.map { $0.id })
@@ -83,8 +93,10 @@ final class DiscoverMovieViewModel: ObservableObject {
         movieStorage.favoritesToggle(item)
         repository.favoritesToggle(id: item.id, type: item.mediaType?.rawValue ?? "movie", isInFavorites: initialState)
             .sink { [weak self] completion in
-                self?.movieStorage.favoritesToggle(item)
-                self?.updateFavorite(item)
+                if case .failure(_) = completion {
+                    self?.movieStorage.favoritesToggle(item)
+                    self?.updateFavorite(item)
+                }
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }

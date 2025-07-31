@@ -42,8 +42,12 @@ final class TrendingMediaViewModel: ObservableObject {
         if mediaStorage.trendingMovies.isEmpty {
             publisher
                 .sink { [weak self] completion in
-                    self?.isLoaded = false
-                    self?.viewState = .success
+                    switch completion {
+                    case .failure(_):
+                        self?.isLoaded = false
+                    case .finished:
+                        self?.viewState = .success
+                    }
                 } receiveValue: { [weak self] (trending, favorites) in
                     self?.mediaStorage.trendingMovies = trending
                     self?.mediaStorage.favoritesMovies = favorites

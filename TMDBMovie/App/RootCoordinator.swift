@@ -21,7 +21,6 @@ final class RootCoordinator: ObservableObject {
         self.tabBarCoordinator = TabBarCoordinator(repository: repository, mediaStorage: mediaStorage)
     }
     
-    
     @ViewBuilder
     func rootView() -> some View {
         if authStore.isAuthenticated {

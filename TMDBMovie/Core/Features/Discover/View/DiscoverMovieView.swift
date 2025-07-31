@@ -29,8 +29,8 @@ struct DiscoverMovieView: View {
         }
         .navigationTitle("Movies")
         .onAppear {
-            print("🟡 onAppear for viewModel ID: \(viewModel.id)")
             if !viewModel.isHasLoaded {
+                print("🟡 onAppear for viewModel ID: \(viewModel.id)")
                viewModel.loadMovies()
             }
         }

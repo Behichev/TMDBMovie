@@ -17,15 +17,16 @@ final class TrendingCoordinator: Coordinator, ObservableObject {
     
     let repository: TMDBRepositoryProtocol
     var mediaStorage: MoviesStorage
+    let viewModel: TrendingMediaViewModel
     
     init(repository: TMDBRepositoryProtocol, mediaStorage: MoviesStorage) {
         self.repository = repository
         self.mediaStorage = mediaStorage
+        self.viewModel = TrendingMediaViewModel(repository: repository, mediaStorage: mediaStorage)
     }
     
     @ViewBuilder
     func rootView() -> some View  {
-        let viewModel = TrendingMediaViewModel(repository: repository, mediaStorage: mediaStorage)
         TrendingMediaView(viewModel: viewModel, onMediaTapped: { id in
             self.push(.details(id: id))
         })

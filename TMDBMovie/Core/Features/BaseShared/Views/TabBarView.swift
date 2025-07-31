@@ -11,19 +11,19 @@ struct TabBarView: View {
     
     @ObservedObject var tabBarCoordinator: TabBarCoordinator
     
-    @ObservedObject var trendingCoordinator: TrendingCoordinator
-    @ObservedObject var discoverCoordinator: DiscoverCoordinator
-    @ObservedObject var favoritesCoordinator: FavoritesCoordinator
+//    @StateObject var trendingCoordinator: TrendingCoordinator
+//    @StateObject var discoverCoordinator: DiscoverCoordinator
+//    @StateObject var favoritesCoordinator: FavoritesCoordinator
     
     let repository: TMDBRepositoryProtocol
     
     init(repository: TMDBRepositoryProtocol, mediaStorage: MoviesStorage, tabBarCoordinator: TabBarCoordinator) {
         self.repository = repository
         self.tabBarCoordinator = tabBarCoordinator
-        
-        self.trendingCoordinator =  TrendingCoordinator(repository: repository, mediaStorage: mediaStorage)
-        self.discoverCoordinator =  DiscoverCoordinator(repository: repository, moviesStorage: mediaStorage)
-        self.favoritesCoordinator =  FavoritesCoordinator(repository: repository, mediaStorage: mediaStorage)
+//
+//        self._trendingCoordinator =  StateObject(wrappedValue: TrendingCoordinator(repository: repository, mediaStorage: mediaStorage))
+//        self._discoverCoordinator =   StateObject(wrappedValue: DiscoverCoordinator(repository: repository, moviesStorage: mediaStorage))
+//        self._favoritesCoordinator =  StateObject(wrappedValue: FavoritesCoordinator(repository: repository, mediaStorage: mediaStorage))
     }
     
     enum Assets: String {
@@ -60,10 +60,10 @@ struct TabBarView: View {
                 }
                 .tag(TabBarItem.userProfile)
         }
-        .onAppear {
-            tabBarCoordinator.trendingCoordinator = trendingCoordinator
-            tabBarCoordinator.discoverCoordinator = discoverCoordinator
-            tabBarCoordinator.favoritesCoordinator = favoritesCoordinator
-        }
+//        .onAppear {
+//            tabBarCoordinator.trendingCoordinator = trendingCoordinator
+//            tabBarCoordinator.discoverCoordinator = discoverCoordinator
+//            tabBarCoordinator.favoritesCoordinator = favoritesCoordinator
+//        }
     }
 }
